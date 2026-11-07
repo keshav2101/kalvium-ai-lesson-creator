@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom prose overrides for lesson content */
+.prose pre {
+  @apply text-sm;
+}
+
+.prose table {
+  @apply text-sm;
+}
+
+/* Print styles for export preview */
+@media print {
+  nav, button, .no-print {
+    display: none !important;
+  }
+  .prose {
+    max-width: 100%;
+  }
+}
+

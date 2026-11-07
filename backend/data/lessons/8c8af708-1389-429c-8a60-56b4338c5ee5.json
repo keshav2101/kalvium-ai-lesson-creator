@@ -1,0 +1,154 @@
+{
+  "id": "8c8af708-1389-429c-8a60-56b4338c5ee5",
+  "title": "Git Version Control Fundamentals",
+  "objective": "Use core Git commands (init, add, commit, branch, merge) to track changes and manage branches in a local repository.",
+  "status": "complete",
+  "created_at": "2026-11-07T13:22:13.349093+00:00",
+  "updated_at": "2026-11-07T13:22:13.349736+00:00",
+  "research": {
+    "mode": "demo",
+    "sources": [
+      {
+        "title": "Pro Git Book (free online) – Scott Chacon & Ben Straub",
+        "type": "Book",
+        "url": "https://git-scm.com/book/en/v2",
+        "relevance_note": "The definitive free reference for Git, covering everything from basics to advanced internals."
+      },
+      {
+        "title": "Git Documentation – git-scm.com",
+        "type": "Documentation / Reference",
+        "url": "https://git-scm.com/docs",
+        "relevance_note": "Official Git command reference with examples; authoritative source for all git commands."
+      },
+      {
+        "title": "GitHub Git Guides",
+        "type": "Website",
+        "url": "https://github.com/git-guides",
+        "relevance_note": "Practical, beginner-friendly guides for common Git workflows from GitHub."
+      },
+      {
+        "title": "Git and GitHub for Beginners – freeCodeCamp (YouTube)",
+        "type": "YouTube Video",
+        "url": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+        "relevance_note": "Popular beginner tutorial covering git init, commit, branch, merge, and GitHub remotes. Over 4 million views."
+      },
+      {
+        "title": "Learn Git Branching (interactive)",
+        "type": "Website",
+        "url": "https://learngitbranching.js.org/",
+        "relevance_note": "Visual, interactive sandbox for practising branching and merging — excellent for self-study activities."
+      }
+    ],
+    "errors": [],
+    "notice": "⚠️ DEMO MODE: Google Custom Search keys are not configured. These sources are curated examples selected for the lesson topic — they are real, verifiable sources but were NOT retrieved by a live search."
+  },
+  "content": "# Git Version Control Fundamentals\n\n> **⚠️ DEMO MODE** — Generated with built-in sample content because no Gemini API key is configured.\n> Add `GEMINI_API_KEY` to `.env` for AI-generated lessons.\n\n## Learning Objective\nUse core Git commands (init, add, commit, branch, merge) to track changes and manage branches in a local repository.\n\n---\n\n## ⏱️ Time Breakdown\n\n| Section | Time |\n|---|---|\n| Introduction | 5 min |\n| Core Content: What is Git? | 7 min |\n| Core Content: Essential Commands | 10 min |\n| Core Content: Branching & Merging | 10 min |\n| Practical Application | 7 min |\n| Knowledge Check | 4 min |\n| Summary & Wrap-up | 2 min |\n| **Total** | **45 min** |\n\n---\n\n## 1. Introduction (5 min)\n\nImagine writing a 50-page report and accidentally deleting half of it — with no Undo. Version control prevents exactly that. **Git** is the world's most widely used version control system, underpinning platforms like GitHub, GitLab, and Bitbucket.\n\n**Opening question:** *Have you ever accidentally overwritten a file and wished you could go back?*\n\n---\n\n## 2. What is Git? (7 min)\n\nGit is a **distributed version control system** (DVCS):\n- Every developer has a **full copy** of the repository.\n- Changes are tracked as **snapshots** (not diffs) over time.\n- It works **offline** — you can commit, branch, and view history without internet.\n\n**Key concepts:**\n\n| Term | Definition |\n|---|---|\n| Repository (repo) | The folder tracked by Git + its entire history |\n| Commit | A saved snapshot of the project at a point in time |\n| Branch | An independent line of development |\n| Merge | Combining changes from two branches |\n| HEAD | Pointer to the currently checked-out commit/branch |\n\n> 📖 **Source:** [Pro Git Book — Chapter 1](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F)\n\n---\n\n## 3. Essential Commands (10 min)\n\n### Setting up\n```bash\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\n```\n\n### Starting a repository\n```bash\ngit init my-project    # Create a new repo\ncd my-project\n```\n\n### The staging area workflow\n```\nWorking Directory → (git add) → Staging Area → (git commit) → Repository\n```\n\n```bash\ngit status             # See what's changed\ngit add README.md      # Stage a specific file\ngit add .              # Stage all changes\ngit commit -m \"Add README\"  # Save a snapshot\ngit log --oneline      # View commit history\n```\n\n> 📖 **Source:** [Git Documentation — git-scm.com](https://git-scm.com/docs)\n\n### Checking and undoing\n```bash\ngit diff               # See unstaged changes\ngit restore <file>     # Discard working-directory changes\ngit restore --staged <file>  # Unstage a file\n```\n\n---\n\n## 4. Branching & Merging (10 min)\n\nBranches let you develop features or fix bugs in isolation.\n\n```bash\ngit branch             # List branches\ngit branch feature-x   # Create a new branch\ngit checkout feature-x # Switch to it\n# (shortcut: git checkout -b feature-x)\n\n# Make changes and commit on feature-x...\ngit add .\ngit commit -m \"Add feature X\"\n\n# Merge back into main\ngit checkout main\ngit merge feature-x    # Fast-forward or creates a merge commit\n```\n\n**Visualising branches:**\n```\nmain:      A---B---C\n                    \\\nfeature-x:           D---E\n                          -> merge into main: A---B---C---M\n```\n\n**Merge conflicts** happen when the same lines were changed on both branches. Git marks conflicts like:\n```\n<<<<<<< HEAD\nYour version\n=======\nTheir version\n>>>>>>> feature-x\n```\nEdit the file to resolve, then `git add` and `git commit`.\n\n> 📖 **Source:** [Pro Git — Branching](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)\n> 🎥 **Git and GitHub for Beginners — freeCodeCamp:** https://www.youtube.com/watch?v=RGOj5yH7evk\n\n---\n\n## 5. Practical Application (7 min)\n\n**Hands-on exercise:**\n```bash\n# 1. Create and initialise a repo\ngit init demo-repo && cd demo-repo\n\n# 2. Create a file, stage, and commit\necho \"# My Project\" > README.md\ngit add README.md\ngit commit -m \"Initial commit\"\n\n# 3. Create a branch and make changes\ngit checkout -b add-info\necho \"More info here.\" >> README.md\ngit add README.md\ngit commit -m \"Add more info\"\n\n# 4. Merge back to main\ngit checkout main\ngit merge add-info\n\n# 5. View the full history\ngit log --oneline --graph --all\n```\n\nExpected output for step 5:\n```\n*   abc1234 (HEAD -> main) Merge branch 'add-info'\n|\\\n| * def5678 (add-info) Add more info\n|/\n* ghi9012 Initial commit\n```\n\n*(Note: your commit hashes will differ from the examples above.)*\n\n---\n\n## 6. Knowledge Check (4 min)\n\n**Question 1:** What command do you use to stage all changed files?\n\n**Question 2:** What single command creates a new branch called `feature-name` AND switches to it?\n\n**Question 3:** After merging `feature-x` into `main`, you see conflict markers. What are the three steps to resolve the conflict?\n\n**Question 4:** What is the difference between `git restore <file>` and `git restore --staged <file>`?\n\n---\n\n### ✅ Answer Key\n\n**Q1:** `git add .`\n\n**Q2:** `git checkout -b feature-name`\n\n**Q3:** (1) Edit the file to remove conflict markers and keep the correct content. (2) `git add <file>`. (3) `git commit` (Git auto-generates the merge commit message).\n\n**Q4:** `git restore <file>` discards **working-directory** changes (un-edits the file). `git restore --staged <file>` moves a file from the staging area back to the working directory (un-stages it) without changing the file content.\n\n---\n\n## 7. Supplementary Resources\n\n- 🎥 **Git and GitHub for Beginners — freeCodeCamp (YouTube):** https://www.youtube.com/watch?v=RGOj5yH7evk *(1 hr overview)*\n- 🌐 **Learn Git Branching (interactive):** https://learngitbranching.js.org/\n\n---\n\n## 8. Summary (2 min)\n\n| Command | What it does |\n|---|---|\n| `git init` | Create a new repository |\n| `git add` | Stage changes |\n| `git commit` | Save a snapshot |\n| `git branch` | List / create branches |\n| `git checkout` | Switch branches or restore files |\n| `git merge` | Combine branches |\n| `git log` | View commit history |\n\n---\n\n## 9. References\n\n1. Pro Git Book (free) — Scott Chacon & Ben Straub: https://git-scm.com/book/en/v2\n2. Git Official Documentation: https://git-scm.com/docs\n3. GitHub Git Guides: https://github.com/git-guides\n4. Git and GitHub for Beginners — freeCodeCamp (YouTube): https://www.youtube.com/watch?v=RGOj5yH7evk\n5. Learn Git Branching (interactive): https://learngitbranching.js.org/\n",
+  "content_edited": null,
+  "qc": {
+    "research_qc": {
+      "report_type": "Research & Factual Accuracy",
+      "status": "PASS",
+      "summary": "The lesson is factually accurate and consistent with authoritative Git documentation. All commands shown produce the described output. The Pro Git book and official Git docs are primary, reliable sources.",
+      "findings": [
+        {
+          "issue": "The `git checkout` command for switching branches is shown; `git switch` (introduced in Git 2.23) is now preferred but not mentioned.",
+          "severity": "low",
+          "location": "Section 4 — Branching & Merging"
+        },
+        {
+          "issue": "The expected log output in the hands-on exercise uses placeholder hashes. Real hashes will differ — this should be noted.",
+          "severity": "low",
+          "location": "Section 5 — Practical Application"
+        }
+      ],
+      "recommendations": [
+        {
+          "id": "R1",
+          "text": "Add a note: 'Modern Git (2.23+) provides `git switch` and `git restore` as clearer alternatives to `git checkout`.' This avoids confusing new learners.",
+          "priority": "medium"
+        },
+        {
+          "id": "R2",
+          "text": "In the exercise, add: '(Note: your commit hashes will differ from the examples above.)'",
+          "priority": "low"
+        }
+      ],
+      "mode": "demo"
+    },
+    "instructional_qc": {
+      "report_type": "Instructional Quality",
+      "status": "PASS_WITH_CONCERNS",
+      "summary": "The lesson is practical and hands-on, well aligned to the objective. The command progression is logical and the branching diagram is clear. The 45-minute breakdown is realistic. A few additions would improve it for beginners.",
+      "findings": [
+        {
+          "issue": "No instruction on how to install Git. Learners who have never used it may be blocked at the practical exercise.",
+          "severity": "medium",
+          "location": "Section 3 — Essential Commands"
+        },
+        {
+          "issue": "Merge conflict resolution is explained but there is no practice exercise for it.",
+          "severity": "medium",
+          "location": "Section 4 — Branching & Merging"
+        },
+        {
+          "issue": "Knowledge check Q2 is slightly ambiguous — it could be read as asking for one command or two.",
+          "severity": "low",
+          "location": "Section 6 — Knowledge Check"
+        }
+      ],
+      "recommendations": [
+        {
+          "id": "I1",
+          "text": "Add a prerequisites box: 'Install Git from https://git-scm.com/downloads before this lesson.'",
+          "priority": "high"
+        },
+        {
+          "id": "I2",
+          "text": "Add a short conflict-resolution exercise: create two branches that modify the same line, merge them, and resolve the conflict.",
+          "priority": "medium"
+        },
+        {
+          "id": "I3",
+          "text": "Rephrase Q2: 'What single command creates a new branch called `feature-name` AND switches to it?'",
+          "priority": "low"
+        }
+      ],
+      "mode": "demo"
+    },
+    "errors": [],
+    "notice": "⚠️ DEMO MODE: These QC reports are pre-written examples. Add GEMINI_API_KEY to .env for AI-powered quality checks."
+  },
+  "generation_mode": "demo",
+  "errors": {},
+  "time_breakdown": [
+    {
+      "section": "Introduction",
+      "minutes": 5
+    },
+    {
+      "section": "Core Content: What is Git?",
+      "minutes": 7
+    },
+    {
+      "section": "Core Content: Essential Commands",
+      "minutes": 10
+    },
+    {
+      "section": "Core Content: Branching & Merging",
+      "minutes": 10
+    },
+    {
+      "section": "Practical Application",
+      "minutes": 7
+    },
+    {
+      "section": "Knowledge Check",
+      "minutes": 4
+    },
+    {
+      "section": "Summary & Wrap-up",
+      "minutes": 2
+    }
+  ],
+  "total_minutes": 45
+}
