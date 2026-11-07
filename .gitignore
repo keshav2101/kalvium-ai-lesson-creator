@@ -24,13 +24,14 @@ share/python-wheels/
 *.egg
 .env
 
-# Next.js
+# Node & Next.js
+node_modules/
+frontend/node_modules/
+.next/
 frontend/.next/
 frontend/out/
 frontend/build/
-frontend/node_modules/
 
 # OS
 .DS_Store
 *.pem
-
