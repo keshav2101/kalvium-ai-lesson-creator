@@ -1,0 +1,136 @@
+{
+  "id": "20bf70d4-ece9-4dde-a98a-4e9a9e20b52f",
+  "title": "dsa data",
+  "objective": "Use core Git commands (init, add, commit, branch, merge) to track changes and manage branches in a local repository.",
+  "status": "complete",
+  "created_at": "2026-11-07T13:25:05.048656+00:00",
+  "updated_at": "2026-11-07T13:25:05.055815+00:00",
+  "research": {
+    "mode": "demo",
+    "sources": [
+      {
+        "title": "Pro Git Book (free online) – Scott Chacon & Ben Straub",
+        "type": "Book",
+        "url": "https://git-scm.com/book/en/v2",
+        "relevance_note": "The definitive free reference for Git, covering everything from basics to advanced internals."
+      },
+      {
+        "title": "Git Documentation – git-scm.com",
+        "type": "Documentation / Reference",
+        "url": "https://git-scm.com/docs",
+        "relevance_note": "Official Git command reference with examples; authoritative source for all git commands."
+      },
+      {
+        "title": "GitHub Git Guides",
+        "type": "Website",
+        "url": "https://github.com/git-guides",
+        "relevance_note": "Practical, beginner-friendly guides for common Git workflows from GitHub."
+      },
+      {
+        "title": "Git and GitHub for Beginners – freeCodeCamp (YouTube)",
+        "type": "YouTube Video",
+        "url": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+        "relevance_note": "Popular beginner tutorial covering git init, commit, branch, merge, and GitHub remotes. Over 4 million views."
+      },
+      {
+        "title": "Learn Git Branching (interactive)",
+        "type": "Website",
+        "url": "https://learngitbranching.js.org/",
+        "relevance_note": "Visual, interactive sandbox for practising branching and merging — excellent for self-study activities."
+      }
+    ],
+    "errors": [],
+    "notice": "⚠️ DEMO MODE: Google Custom Search keys are not configured. These sources are curated examples selected for the lesson topic — they are real, verifiable sources but were NOT retrieved by a live search."
+  },
+  "content": "# dsa data\n\n> **⚠️ DEMO MODE** — Add `GEMINI_API_KEY` to `.env` for AI-generated content.\n> This is a template lesson structure for demonstration.\n\n## Learning Objective\nUse core Git commands (init, add, commit, branch, merge) to track changes and manage branches in a local repository.\n\n---\n\n## ⏱️ Time Breakdown\n\n| Section | Time |\n|---|---|\n| Introduction | 5 min |\n| Core Content | 20 min |\n| Practical Application | 10 min |\n| Knowledge Check | 7 min |\n| Summary | 3 min |\n| **Total** | **45 min** |\n\n---\n\n## 1. Introduction (5 min)\n*(Instructor: introduce the topic and connect it to learners' prior knowledge.)*\n\nThis lesson covers: **dsa data**\n\nBy the end of this lesson you will be able to: Use core Git commands (init, add, commit, branch, merge) to track changes and manage branches in a local repository.\n\n---\n\n## 2. Core Content (20 min)\n\n### Key Concepts\n\n- **Concept 1:** Description and example.\n- **Concept 2:** Description and example.\n- **Concept 3:** Description and example.\n\n---\n\n## 3. Practical Application (10 min)\n\n**Exercise:** Apply the concepts to a real scenario.\n\n---\n\n## 4. Knowledge Check (7 min)\n\n1. Question 1 about the core concepts?\n2. Question 2 about the core concepts?\n3. Question 3 about the core concepts?\n\n### Answer Key\n1. Answer 1\n2. Answer 2\n3. Answer 3\n\n---\n\n## 5. Summary (3 min)\n\nRecap the key points covered in this lesson.\n\n---\n\n## References\n\n1. [Book] Pro Git Book (free online) – Scott Chacon & Ben Straub: https://git-scm.com/book/en/v2\n2. [Documentation / Reference] Git Documentation – git-scm.com: https://git-scm.com/docs\n3. [Website] GitHub Git Guides: https://github.com/git-guides\n4. [YouTube Video] Git and GitHub for Beginners – freeCodeCamp (YouTube): https://www.youtube.com/watch?v=RGOj5yH7evk\n5. [Website] Learn Git Branching (interactive): https://learngitbranching.js.org/\n",
+  "content_edited": null,
+  "qc": {
+    "research_qc": {
+      "report_type": "Research & Factual Accuracy",
+      "status": "PASS_WITH_CONCERNS",
+      "summary": "Demo QC: Unable to verify this specific topic. Generic assessment provided.",
+      "findings": [
+        {
+          "issue": "Sources could not be verified in demo mode.",
+          "severity": "medium",
+          "location": "References"
+        },
+        {
+          "issue": "Factual accuracy of AI-generated content should be reviewed by a subject-matter expert.",
+          "severity": "medium",
+          "location": "Overall lesson"
+        }
+      ],
+      "recommendations": [
+        {
+          "id": "R1",
+          "text": "Have a subject-matter expert review all factual claims.",
+          "priority": "high"
+        },
+        {
+          "id": "R2",
+          "text": "Verify all URLs are accessible before distributing the lesson.",
+          "priority": "medium"
+        }
+      ],
+      "mode": "demo"
+    },
+    "instructional_qc": {
+      "report_type": "Instructional Quality",
+      "status": "PASS_WITH_CONCERNS",
+      "summary": "Demo QC: Generic instructional review. Add Gemini API key for real AI-powered analysis.",
+      "findings": [
+        {
+          "issue": "Prerequisites for learners are not explicitly stated.",
+          "severity": "low",
+          "location": "Introduction"
+        },
+        {
+          "issue": "Answer key completeness could not be fully assessed in demo mode.",
+          "severity": "medium",
+          "location": "Knowledge Check"
+        }
+      ],
+      "recommendations": [
+        {
+          "id": "I1",
+          "text": "Add a prerequisites section at the top of the lesson.",
+          "priority": "medium"
+        },
+        {
+          "id": "I2",
+          "text": "Ensure all activity questions have corresponding answers in the answer key.",
+          "priority": "high"
+        }
+      ],
+      "mode": "demo"
+    },
+    "errors": [],
+    "notice": "⚠️ DEMO MODE: These QC reports are pre-written examples. Add GEMINI_API_KEY to .env for AI-powered quality checks."
+  },
+  "generation_mode": "demo",
+  "errors": {},
+  "time_breakdown": [
+    {
+      "section": "Introduction",
+      "minutes": 5
+    },
+    {
+      "section": "Core Content",
+      "minutes": 20
+    },
+    {
+      "section": "Practical Application",
+      "minutes": 10
+    },
+    {
+      "section": "Knowledge Check",
+      "minutes": 7
+    },
+    {
+      "section": "Summary",
+      "minutes": 3
+    }
+  ],
+  "total_minutes": 45
+}

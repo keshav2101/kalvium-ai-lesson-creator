@@ -1,0 +1,170 @@
+{
+  "id": "05a88f5f-4148-4e6b-a2f2-0ef10f497b58",
+  "title": "HTTP Requests and Responses",
+  "objective": "Explain GET and POST methods and distinguish between 2xx, 4xx, and 5xx response status categories.",
+  "status": "complete",
+  "created_at": "2026-11-07T13:24:35.042925+00:00",
+  "updated_at": "2026-11-07T13:24:35.066174+00:00",
+  "research": {
+    "mode": "demo",
+    "sources": [
+      {
+        "title": "HTTP | MDN Web Docs",
+        "type": "Documentation / Reference",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+        "relevance_note": "Comprehensive, authoritative reference for HTTP concepts including methods and status codes. Maintained by Mozilla."
+      },
+      {
+        "title": "HTTP Methods – MDN",
+        "type": "Documentation / Reference",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods",
+        "relevance_note": "Official definitions of GET, POST, and all other HTTP methods with usage guidance."
+      },
+      {
+        "title": "HTTP Status Codes – MDN",
+        "type": "Documentation / Reference",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status",
+        "relevance_note": "Authoritative list of all HTTP status codes including 2xx, 4xx, and 5xx categories."
+      },
+      {
+        "title": "HTTP Crash Course – Traversy Media (YouTube)",
+        "type": "YouTube Video",
+        "url": "https://www.youtube.com/watch?v=iYM2zFP3Zn0",
+        "relevance_note": "Practical video covering HTTP fundamentals, request/response cycle, methods, and status codes."
+      },
+      {
+        "title": "RFC 9110: HTTP Semantics",
+        "type": "Website",
+        "url": "https://www.rfc-editor.org/rfc/rfc9110",
+        "relevance_note": "The authoritative IETF specification defining HTTP/1.1 semantics and status codes."
+      },
+      {
+        "title": "HTTP – Wikipedia",
+        "type": "Website",
+        "url": "https://en.wikipedia.org/wiki/HTTP",
+        "relevance_note": "Good overview of HTTP history, design, and key concepts for background context."
+      }
+    ],
+    "errors": [],
+    "notice": "⚠️ DEMO MODE: Google Custom Search keys are not configured. These sources are curated examples selected for the lesson topic — they are real, verifiable sources but were NOT retrieved by a live search."
+  },
+  "content": "# HTTP Requests and Responses\n\n> **⚠️ DEMO MODE** — Generated with built-in sample content because no Gemini API key is configured.\n> Add `GEMINI_API_KEY` to `.env` for AI-generated lessons.\n\n## Learning Objective\nExplain GET and POST methods and distinguish between 2xx, 4xx, and 5xx HTTP response status categories.\n\n---\n\n## ⏱️ Time Breakdown\n\n| Section | Time |\n|---|---|\n| Introduction | 5 min |\n| Core Content: HTTP Basics | 10 min |\n| Core Content: Methods (GET & POST) | 10 min |\n| Core Content: Status Codes | 8 min |\n| Practical Application | 5 min |\n| Knowledge Check | 5 min |\n| Summary & Wrap-up | 2 min |\n| **Total** | **45 min** |\n\n---\n\n## 1. Introduction (5 min)\n\nEvery time you open a website, your browser has a conversation with a server. That conversation follows a strict protocol: **HTTP** (Hypertext Transfer Protocol). Understanding how HTTP works is foundational to web development, API design, and debugging.\n\n**Opening question for learners:** *What do you think happens between your browser and Google's servers when you search for something?*\n\n---\n\n## 2. Core Content\n\n### 2.1 The HTTP Request–Response Cycle (10 min)\n\nHTTP is a **request–response protocol**:\n1. A **client** (browser, mobile app, curl) sends a **request** to a server.\n2. The **server** processes the request and returns a **response**.\n\n**Anatomy of an HTTP Request:**\n```\nGET /search?q=http HTTP/1.1\nHost: developer.mozilla.org\nAccept: text/html\n```\n\n| Part | Example | Purpose |\n|---|---|---|\n| Method | `GET` | What action to perform |\n| Path | `/search?q=http` | Which resource |\n| HTTP Version | `HTTP/1.1` | Protocol version |\n| Headers | `Host:`, `Accept:` | Metadata for the server |\n| Body | (empty for GET) | Data payload (used by POST) |\n\n**Anatomy of an HTTP Response:**\n```\nHTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 4821\n\n<!DOCTYPE html>...\n```\n\n> 📖 **Source:** [HTTP Overview — MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)\n\n---\n\n### 2.2 GET vs POST Methods (10 min)\n\nHTTP defines several **methods** (also called verbs). The two most common are GET and POST.\n\n#### GET\n- **Purpose:** Retrieve a resource. No side effects — the server state does not change.\n- **Data location:** Parameters are appended to the URL as a **query string**.\n- **Idempotent:** Yes — repeating the same GET produces the same result.\n- **Example:**\n  ```\n  GET /users?id=42 HTTP/1.1\n  Host: api.example.com\n  ```\n\n#### POST\n- **Purpose:** Send data to the server to create or update a resource.\n- **Data location:** Data is in the **request body** (not visible in the URL).\n- **Idempotent:** No — repeating the same POST may create duplicates.\n- **Example:**\n  ```\n  POST /users HTTP/1.1\n  Host: api.example.com\n  Content-Type: application/json\n\n  {\"name\": \"Alice\", \"email\": \"alice@example.com\"}\n  ```\n\n**GET vs POST comparison:**\n\n| Feature | GET | POST |\n|---|---|---|\n| Data location | URL query string | Request body |\n| Visibility | Visible in URL/logs | Hidden in body |\n| Bookmarkable | Yes | No |\n| Idempotent | Yes | No |\n| Use case | Read/search | Create/submit |\n| Body | None | Required |\n\n> 📖 **Source:** [HTTP Methods — MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)\n\n---\n\n### 2.3 HTTP Status Codes (8 min)\n\nEvery HTTP response includes a **3-digit status code** that tells the client what happened.\n\n#### 2xx — Success\nThe request was received, understood, and accepted.\n\n| Code | Name | Meaning |\n|---|---|---|\n| 200 | OK | Standard success. Response body contains the result. |\n| 201 | Created | Resource successfully created (e.g., after a POST). |\n| 204 | No Content | Success, but no body to return (e.g., after a DELETE). |\n\n#### 4xx — Client Error\nThe client made an error in the request.\n\n| Code | Name | Meaning |\n|---|---|---|\n| 400 | Bad Request | Server couldn't understand the request (malformed syntax). |\n| 401 | Unauthorized | Authentication required or failed. |\n| 403 | Forbidden | Authenticated but not permitted to access the resource. |\n| 404 | Not Found | Resource doesn't exist at the given URL. |\n| 422 | Unprocessable Entity | Request is well-formed but contains invalid data. |\n\n#### 5xx — Server Error\nThe server failed to fulfil a valid request.\n\n| Code | Name | Meaning |\n|---|---|---|\n| 500 | Internal Server Error | Generic catch-all; something went wrong on the server. |\n| 502 | Bad Gateway | Upstream server sent an invalid response. |\n| 503 | Service Unavailable | Server is overloaded or down for maintenance. |\n\n> 📖 **Source:** [HTTP Status Codes — MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)\n> 📖 **Source:** [RFC 9110 — IETF](https://www.rfc-editor.org/rfc/rfc9110)\n\n**Memory tip:** Think of the first digit: **2** = done, **4** = your fault, **5** = our fault.\n\n---\n\n## 3. Practical Application (5 min)\n\n### Try it yourself — curl\nOpen a terminal and run:\n```bash\n# GET request — fetch a JSON placeholder\ncurl -v https://jsonplaceholder.typicode.com/posts/1\n\n# POST request — create a new post\ncurl -X POST https://jsonplaceholder.typicode.com/posts \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"title\":\"My Post\",\"body\":\"Hello\",\"userId\":1}'\n```\n\nInspect the **status code** and **response headers** in the output (lines starting with `<`).\n\n### Browser DevTools\n1. Open Chrome/Firefox DevTools → **Network** tab.\n2. Navigate to any website.\n3. Click a request → inspect **Headers** (method, URL) and **Response** (status code, body).\n\n---\n\n## 4. Learner Activities (included in core time)\n\n**Activity A — Classification exercise:**\nLabel each scenario with the correct status code:\n1. You type a URL that doesn't exist. → ___\n2. You submit a login form with correct credentials and are logged in. → ___\n3. The database server crashes while handling your request. → ___\n4. You try to access an admin page without logging in. → ___\n5. You create a new account successfully. → ___\n\n*(Answers in Knowledge Check below)*\n\n**Activity B — Identify GET vs POST:**\nFor each action, say whether GET or POST is more appropriate and why:\n1. Searching for products on an e-commerce site.\n2. Submitting a contact form.\n3. Loading a user's profile page.\n4. Uploading a file.\n\n**Activity B Answers:**\n1. GET — read-only search with no side effects; parameters go in the URL.\n2. POST — sends user data to the server; not idempotent.\n3. GET — retrieves existing data; safe and cacheable.\n4. POST — sends file data in request body; modifies server state.\n\n---\n\n## 5. Knowledge Check (5 min)\n\n**Question 1:** What is the key difference between a GET and POST request?\n\n**Question 2:** A user visits a page and sees `403 Forbidden`. What does this mean, and how is it different from `401 Unauthorized`?\n\n**Question 3:** An API returns `201 Created` after a form submission. What does this tell you about what happened?\n\n**Question 4 (Activity A answers):**\n1. `404 Not Found`\n2. `200 OK`\n3. `500 Internal Server Error`\n4. `401 Unauthorized` (or `403 Forbidden` if already logged in but lacks permission)\n5. `201 Created`\n\n---\n\n### ✅ Answer Key\n\n**Q1:** GET retrieves data without modifying server state; parameters go in the URL. POST sends data in the request body to create or modify a resource; it may change server state and is not idempotent.\n\n**Q2:** `403 Forbidden` means the server knows who you are (authenticated) but refuses access. `401 Unauthorized` means authentication is missing or failed — you haven't proved your identity yet.\n\n**Q3:** The server successfully created a new resource as a result of the request. The response body typically contains the created resource or its location.\n\n---\n\n## 6. Supplementary Resources\n\n- 🎥 **HTTP Crash Course — Traversy Media:** https://www.youtube.com/watch?v=iYM2zFP3Zn0\n  *(27 min video — excellent visual walkthrough of requests, responses, methods, and status codes)*\n\n---\n\n## 7. Summary (2 min)\n\n| Concept | Key point |\n|---|---|\n| HTTP | Request–response protocol for client–server communication |\n| GET | Retrieve data; parameters in URL; idempotent |\n| POST | Send data; parameters in body; not idempotent |\n| 2xx | Success (200 OK, 201 Created, 204 No Content) |\n| 4xx | Client error (400, 401, 403, 404, 422) |\n| 5xx | Server error (500, 502, 503) |\n\n---\n\n## 8. References\n\n1. MDN Web Docs — HTTP Overview: https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview\n2. MDN Web Docs — HTTP Methods: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods\n3. MDN Web Docs — HTTP Status Codes: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status\n4. RFC 9110 — HTTP Semantics (IETF): https://www.rfc-editor.org/rfc/rfc9110\n5. Traversy Media — HTTP Crash Course (YouTube): https://www.youtube.com/watch?v=iYM2zFP3Zn0\n6. Wikipedia — HTTP: https://en.wikipedia.org/wiki/HTTP\n",
+  "content_edited": null,
+  "qc": {
+    "research_qc": {
+      "report_type": "Research & Factual Accuracy",
+      "status": "PASS_WITH_CONCERNS",
+      "summary": "The lesson's factual content is accurate and well-grounded in authoritative sources (MDN, RFC 9110). All cited URLs are real and verifiable. One minor gap: the lesson does not distinguish between HTTP/1.1 and HTTP/2 semantics, which could be noted as out-of-scope.",
+      "findings": [
+        {
+          "issue": "No explicit mention that HTTP/2 and HTTP/3 exist as successors. Learners may encounter these in the wild.",
+          "severity": "low",
+          "location": "Section 2.1 — HTTP Basics"
+        },
+        {
+          "issue": "The 401/403 distinction is correct, but the nuance that 401 implies WWW-Authenticate header should be present is not mentioned.",
+          "severity": "low",
+          "location": "Section 2.3 — Status Codes"
+        },
+        {
+          "issue": "YouTube source (Traversy Media) could not be verified as still live. Recommend checking URL before use.",
+          "severity": "medium",
+          "location": "Supplementary Resources"
+        }
+      ],
+      "recommendations": [
+        {
+          "id": "R1",
+          "text": "Add a brief note in Section 2.1 acknowledging HTTP/2 and HTTP/3 exist but are outside this lesson's scope.",
+          "priority": "low"
+        },
+        {
+          "id": "R2",
+          "text": "Verify that the YouTube URL is accessible before distributing the lesson.",
+          "priority": "medium"
+        },
+        {
+          "id": "R3",
+          "text": "In the 401 vs 403 comparison, add: '401 means the client must authenticate; 403 means authentication would not help.'",
+          "priority": "low"
+        }
+      ],
+      "mode": "demo"
+    },
+    "instructional_qc": {
+      "report_type": "Instructional Quality",
+      "status": "PASS",
+      "summary": "The lesson is well-structured and directly aligned to the learning objective. It includes explanations, tables, examples, hands-on activities, and a full answer key. Minor improvements could strengthen learner support for complete beginners.",
+      "findings": [
+        {
+          "issue": "The 'Opening question' in the introduction is good, but there is no mechanism for learners to record or submit their answer.",
+          "severity": "low",
+          "location": "Section 1 — Introduction"
+        },
+        {
+          "issue": "Activity B (GET vs POST identification) lacks a provided answer key within the lesson.",
+          "severity": "medium",
+          "location": "Section 4 — Learner Activities"
+        },
+        {
+          "issue": "No explicit differentiation for learners who are completely new to networking vs those with some background.",
+          "severity": "low",
+          "location": "Overall lesson"
+        }
+      ],
+      "recommendations": [
+        {
+          "id": "I1",
+          "text": "Add an answer key for Activity B (GET vs POST) so self-study learners can check their understanding.",
+          "priority": "medium"
+        },
+        {
+          "id": "I2",
+          "text": "Add a 'Prerequisites' box near the top (e.g., 'Basic familiarity with websites and browsers').",
+          "priority": "low"
+        },
+        {
+          "id": "I3",
+          "text": "Consider adding a diagram of the HTTP request–response cycle (a simple ASCII or linked image) for visual learners.",
+          "priority": "low"
+        }
+      ],
+      "mode": "demo"
+    },
+    "errors": [],
+    "notice": "⚠️ DEMO MODE: These QC reports are pre-written examples. Add GEMINI_API_KEY to .env for AI-powered quality checks."
+  },
+  "generation_mode": "demo",
+  "errors": {},
+  "time_breakdown": [
+    {
+      "section": "Introduction",
+      "minutes": 5
+    },
+    {
+      "section": "Core Content: HTTP Basics",
+      "minutes": 10
+    },
+    {
+      "section": "Core Content: Methods (GET & POST)",
+      "minutes": 10
+    },
+    {
+      "section": "Core Content: Status Codes",
+      "minutes": 8
+    },
+    {
+      "section": "Practical Application",
+      "minutes": 5
+    },
+    {
+      "section": "Knowledge Check",
+      "minutes": 5
+    },
+    {
+      "section": "Summary & Wrap-up",
+      "minutes": 2
+    }
+  ],
+  "total_minutes": 45
+}

@@ -175,3 +175,4 @@ Open **http://localhost:3000** in your browser.
 - **Live search queries:** Google Custom Search API free tier is limited to 100 queries/day.
 - **Diff viewer:** The lesson editor currently provides side-by-side edit/preview modes. A future enhancement could add a visual Git-style diff when applying QC recommendations automatically.
 - **PDF Export:** Markdown and browser print are currently supported; native server-side PDF generation via WeasyPrint could be added with additional system dependencies.
+
