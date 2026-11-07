@@ -1,178 +1,220 @@
 # AI-Powered Lesson Creation Tool
 
-An AI-powered tool for instructors to create, research, draft, review, quality-check, edit, and export structured 45-minute lessons.
+An AI-powered instructional design platform for instructors to research authoritative sources, draft structured 45-minute lessons, run two independent quality-control audits, edit and apply recommendations non-destructively, preview, and export comprehensive lesson documents.
 
 Built for the **AI Research Intern hiring task**.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start & Setup Instructions
 
 ### Prerequisites
-- **Node.js** v18+ and **npm** v9+
-- **Python** 3.10+ and **pip**
+- **Node.js** v18+ and **npm** v9+ (tested on Node v25 / npm v11)
+- **Python** 3.10+ and **pip** (tested on Python 3.11)
 
-### 1. Install Dependencies
+### 1. Installation
 
 ```bash
-# Clone / navigate to the repository
+# Clone or navigate to the repository
 cd kalvium-ai
 
-# Backend dependencies
+# Install backend dependencies
 cd backend && pip install -r requirements.txt && cd ..
 
-# Frontend dependencies
+# Install frontend dependencies
 cd frontend && npm install && cd ..
 ```
 
-### 2. Configure Environment (Optional)
+### 2. Configuration (Optional)
 
-The tool runs **completely offline in Demo Mode** out of the box with zero configuration!
+The tool runs **completely locally in Demo Mode out of the box** with zero configuration required.
 
 To enable live Google Gemini AI and live Google Search:
-
 ```bash
 cp .env.example .env
 ```
-
-Open `.env` and fill in your keys:
+Open `.env` and provide your credentials:
 ```ini
-# Google Gemini API key (free at https://aistudio.google.com/app/apikey)
+# Google Gemini API key (Free at https://aistudio.google.com/app/apikey)
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# Optional: Google Custom Search for live web research
+# Optional: Google Custom Search API for live web research
 # (https://developers.google.com/custom-search/v1/overview)
-GOOGLE_CSE_API_KEY=your_key_here
-GOOGLE_CSE_ID=your_search_engine_id_here
+GOOGLE_CSE_API_KEY=your_google_cse_key_here
+GOOGLE_CSE_ID=your_programmable_search_engine_id_here
 ```
 
-> **Note on Demo Mode:** If no keys are provided, the app runs in **Demo Mode**. All sample sources and QC reports are clearly labeled as demo content — they are never presented as live research.
+> **Demo Mode Disclosure:** When API keys are not provided, the platform operates in **Demo Mode**. All research references and QC reports are clearly tagged with `⚠️ DEMO MODE` badges and notices. Demo results are curated from real-world authoritative resources and are never presented as live research or independent factual verification.
 
-### 3. Run the App
+### 3. Running the Tool
 
+To start both servers with a single command:
 ```bash
 ./start.sh
 ```
 
 Or start the servers manually in separate terminals:
-
 ```bash
-# Terminal 1: Backend (port 8000)
+# Terminal 1: FastAPI Backend (Port 8000)
 cd backend && uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
-# Terminal 2: Frontend (port 3000)
+# Terminal 2: Next.js Frontend (Port 3000)
 cd frontend && npm run dev
 ```
 
-Open **http://localhost:3000** in your browser.
+Open **[http://localhost:3000](http://localhost:3000)** in your web browser.
+Interactive OpenAPI documentation is available at **[http://localhost:8000/docs](http://localhost:8000/docs)**.
 
 ---
 
-## 📖 Architecture & Workflow
+## 🏛️ Architecture & System Design
 
 ```
 [ Instructor Inputs ]
-  Title + Objective (Validated on client & server)
+  ├── Lesson Title (Required, validated >= 5 chars)
+  └── Learning Objective (Required, validated >= 10 chars)
          │
          ▼
-[ Step 1: Research Service ]
-  ├── Live Search: Google Custom Search API (Books, MDN, YouTube)
-  └── Demo Mode: Curated authoritative sources (clearly labeled)
+[ Step 1: Research Service (backend/services/research.py) ]
+  ├── Live Search: Queries Google Custom Search for Books, Web Docs, and YouTube videos
+  └── Demo Mode: Curated authoritative sources (Book, Reference, Website, YouTube)
+  └── Categorization & graceful fallback when a source category is unavailable
          │
          ▼
-[ Step 2: Lesson Generation ]
-  ├── Live Generation: Gemini 1.5 Flash (structured 45-min lesson)
-  └── Demo Mode: Pre-structured, full-length lesson
+[ Step 2: Lesson Drafting Service (backend/services/lesson_gen.py) ]
+  ├── Live Generation: Google Gemini 1.5 Flash (structured prompt with 45-min budget)
+  └── Demo Mode: Full-length structured lessons with explanations & answer keys
+  └── Time Breakdown enforcement: parts strictly sum to <= 45 minutes
          │
          ▼
-[ Step 3: Two Independent QC Reports ]
-  ├── Report A: Research & Factual Accuracy
-  │     (factual claims, source reliability, gaps, contradictions)
-  └── Report B: Instructional Quality
-        (objective alignment, structure, examples, learner support)
+[ Step 3: Dual Independent QC Audits (backend/services/qc.py) ]
+  ├── Report A: Research & Factual Accuracy (claims, source validity, gaps, contradictions)
+  └── Report B: Instructional Quality (objective alignment, pedagogy, learner support)
+  └── Actionable recommendations with target sections and suggested text additions
          │
          ▼
-[ Local Persistence ]
-  Saved to backend/data/lessons/{id}.json after every successful step
+[ Local Disk Persistence (backend/services/persistence.py) ]
+  Saved to backend/data/lessons/{id}.json after every step, edit, and recommendation
          │
          ▼
-[ Review & Edit ]
-  ├── Live Markdown editor with preview toggle
-  ├── Apply selected QC recommendations
-  └── Manual local save (persisted across page reloads)
+[ Review, Non-Destructive Editing & Retry Controls (frontend/app/page.tsx) ]
+  ├── Markdown preview & live text editor
+  ├── Surgical recommendation application (inserts without clobbering other edits)
+  ├── Step-level and full retry controls for failed steps
+  └── Re-run quality checks on updated drafts
          │
          ▼
-[ Export ]
-  Single-click export: Markdown (.md) or Print-friendly view
-  Includes: Lesson + Research Sources + Both QC Reports
+[ Export & Print Preview (backend/routes/export.py) ]
+  ├── Single-click download as complete Markdown (.md)
+  └── Print / Save to PDF view (clean print-specific stylesheet)
 ```
 
 ---
 
-## ✨ Features & Verification
+## 📋 Supported Sample Lessons
 
-| Requirement | Implementation | Status |
-|---|---|---|
-| **Inputs** | Required title and objective with validation; quick-load buttons for both sample lessons | ✅ Complete |
-| **Sample Lessons** | 1. HTTP Requests & Responses<br>2. Git Version Control Fundamentals | ✅ Included |
-| **Research** | Sources categorized (Book, Reference, YouTube, Website); live search with demo fallback; clearly labeled | ✅ Complete |
-| **45-Min Lesson** | Total time capped at 45 min; visual time breakdown; activities + knowledge checks with full answer key | ✅ Complete |
-| **Two QC Reports** | Independent Research & Instructional reports; status badges; actionable recommendations with "Mark Applied" | ✅ Complete |
-| **Editing & Persistence** | Markdown editor; manual save button; persisted to JSON on disk; survives page refresh | ✅ Complete |
-| **Export** | Downloads clean Markdown with lesson, citations, sources appendix, and both QC reports; Print preview | ✅ Complete |
-| **Failure Handling** | State saved after each step; failed steps show clear error banner; retry doesn't erase existing work | ✅ Complete |
+The platform includes one-click demonstration loaders for both required sample lessons:
+
+1. **HTTP Requests and Responses**
+   - **Learning Objective:** Explain GET and POST methods and distinguish between 2xx, 4xx, and 5xx response status categories.
+   - **Sources:** *HTTP: The Definitive Guide* (O'Reilly Book), MDN HTTP Overview, MDN HTTP Methods, MDN HTTP Status Codes, RFC 9110 (IETF), and Traversy Media HTTP Crash Course (YouTube).
+   - **Activities & Practice:** Hands-on `curl` commands, browser DevTools inspection, status classification exercises, and GET vs POST decision exercises.
+   - **Assessment:** 4 multi-part knowledge check questions with complete answer keys.
+
+2. **Git Version Control Fundamentals**
+   - **Learning Objective:** Use core Git commands (init, add, commit, branch, merge) to track changes and manage branches in a local repository.
+   - **Sources:** *Pro Git* (Official Free Book), git-scm.com documentation, GitHub Git Guides, Learn Git Branching sandbox, and freeCodeCamp Git crash course (YouTube).
+   - **Activities & Practice:** Local repository initialization, staging area workflow, branching, commit log inspection, and merge conflict resolution.
+   - **Assessment:** 4 conceptual and practical check questions with complete answer keys.
 
 ---
 
-## 🧪 Demonstration Guide
+## 🔍 Quality Control & Non-Destructive Recommendation Workflow
 
-1. **Load Sample Lesson 1:**
-   - Click the **"HTTP Requests and Responses"** pill under Quick Examples.
-   - Click **"✨ Generate Lesson"**.
-   - Watch the progress indicator step through: Research → Lesson Draft → Quality Checks.
-   - Review the generated lesson, the 45-minute time breakdown chart, the Research panel, and both QC reports.
+The platform provides two strictly separate QC evaluations:
 
-2. **Test Instructor Edits & Persistence:**
-   - Switch to **"Edit Markdown"** mode in the lesson viewer.
-   - Make an edit (e.g., change the title or add a section).
-   - Click **"Save"** (turns into "✓ Saved!").
-   - Refresh the page (**Cmd+R** / **F5**).
-   - Select the lesson from the sidebar — your edits are preserved!
+### Report A: Research and Factual Accuracy
+- Evaluates factual claims against cited references.
+- Assesses source reliability, relevance, and coverage gaps.
+- Discloses the scope of review (internal consistency check against source references; does not claim external live endpoint polling).
 
-3. **Apply QC Recommendations:**
+### Report B: Instructional Quality
+- Evaluates pedagogical alignment to the stated learning objective.
+- Checks structural flow, concrete examples, and practical activities.
+- Identifies missing learner support (e.g. beginner prerequisites, edge-case explanations).
+
+### Non-Destructive Recommendation Application
+Unlike tools that overwrite entire documents or merely mark checklists, this tool:
+1. Each recommendation contains a `target_section` and a concrete `suggested_text` Markdown snippet.
+2. Clicking **"Apply to Lesson"** surgically splices the suggested text into the target section of the active draft.
+3. **All unrelated manual edits made by the instructor are 100% preserved**.
+4. Instructors can also click **"Undo"** to cleanly remove an applied addition, or **"Mark Done"** if they addressed the suggestion with custom wording.
+5. Instructors can click **"Re-evaluate Current Draft"** to trigger a fresh QC audit against their modified lesson text.
+
+---
+
+## 🧪 Demonstration & Testing Walkthrough
+
+Follow these steps to exercise the full workflow in your browser:
+
+1. **Input & Generation:**
+   - Open **http://localhost:3000**.
+   - Click the **"HTTP Requests and Responses"** quick example button.
+   - Click **"✨ Generate 45-Min Lesson"**.
+   - Observe the progressive generation indicator (Research → Drafting → Dual QC).
+
+2. **Inspect Research Sources:**
+   - Click the **"🔍 Research Sources"** tab.
+   - Verify sources across all categories: **Book**, **Documentation / Reference**, **Website**, and **YouTube Video**.
+   - Confirm each card displays title, type, link, and relevance note.
+
+3. **Inspect Time Breakdown & Lesson:**
+   - Review the color-coded time breakdown bar at the top (strictly sums to 45 minutes).
+   - Scroll through the rendered lesson to inspect the explanations, tables, hands-on `curl` commands, learner activities, and answer keys.
+
+4. **Edit & Persist:**
+   - Switch to **"✏️ Edit Markdown"** mode.
+   - Add a custom sentence to Section 1 (e.g. `> 🎯 Note: Ask students to open terminal.`).
+   - Click **"Save Changes"** (notice `✓ Saved to disk`).
+   - Refresh the browser (**F5** / **Cmd+R**). Re-select the lesson from the sidebar: confirm your custom edit is intact!
+
+5. **Apply QC Recommendation Safely:**
    - Open the **"✅ Quality Checks"** tab.
-   - Notice the two separate reports: **Research & Factual Accuracy** and **Instructional Quality**.
-   - Click **"Mark Applied"** on recommendation `R1`.
-   - Notice the status updates to `✓ Applied`.
+   - Expand Report A and Report B.
+   - On recommendation `R1` (HTTP/2 protocol note targeting Section 2.1), click **"Apply to Lesson"**.
+   - Return to the **"📄 Lesson Document"** tab: confirm the protocol note was inserted into Section 2.1, and verify your custom note in Section 1 was **completely preserved**!
 
-4. **Load Sample Lesson 2:**
-   - Click the **"Git Version Control Fundamentals"** pill.
-   - Click **"✨ Generate Lesson"**.
-   - Review the different lesson content, custom sources (Pro Git book, freeCodeCamp video), and distinct QC reports.
+6. **Export & Print:**
+   - Click **"⬇️ Export Markdown"** in the top-right header to download the complete file.
+   - Open the downloaded `.md` file to confirm it contains the finalized lesson, sources appendix, and both QC reports.
+   - Click **"🖨️ Print / PDF"** to preview the clean, print-optimized document.
 
-5. **Export:**
-   - Click **"⬇️ Export Markdown"** in the top right.
-   - Open the downloaded `.md` file in any text editor.
-   - Confirm it contains the full lesson, research sources appendix, and both QC reports.
-   - Click **"🖨️ Print"** to verify the clean print layout.
+7. **Exercise Sample Lesson 2:**
+   - Click the **"Git Version Control Fundamentals"** quick example and generate.
+   - Confirm the 45-minute pacing, Git-specific sources (Pro Git book, freeCodeCamp video), and Git QC reports.
 
 ---
 
-## 🛠️ Tech Stack & Key Choices
+## 📊 Verification Test Results
 
-- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS, `@tailwindcss/typography`, `react-markdown`, `remark-gfm`.
-  - *Why:* Zero-config setup, instant TypeScript validation, clean responsive design with Tailwind, standard Markdown rendering.
-- **Backend:** FastAPI (Python 3.11), Uvicorn, Pydantic v2, `google-generativeai`, `httpx`.
-  - *Why:* Native async support for parallel research/QC calls, strict type validation via Pydantic, auto-generated OpenAPI docs at `http://localhost:8000/docs`.
-- **Persistence:** Local JSON file store in `backend/data/lessons/`.
-  - *Why:* Simple, transparent, inspectable, zero external database setup required.
-- **AI / Search:** Google Gemini 1.5 Flash + Google Custom Search with graceful degradation to pre-curated demo mode.
+All core capabilities were tested and verified against the running FastAPI backend and Next.js frontend:
+
+| Test Area | Verification Performed | Result |
+|---|---|---|
+| **Input Validation** | Tested empty title/objective and strings `< 5` characters via API and UI | ✅ **PASSED** (HTTP 422 with clear error messages) |
+| **Sample Lesson 1** | Generated HTTP lesson; checked all 4 source types, time breakdown, GET/POST, 2xx/4xx/5xx, curl exercise, answer key | ✅ **PASSED** (All sections present; total = 45 min) |
+| **Sample Lesson 2** | Generated Git lesson; checked Pro Git book, Git docs, YouTube video, branch/merge exercises, answer key | ✅ **PASSED** (Measurable objective; total = 45 min) |
+| **Non-Destructive QC** | Added custom edit to Section 1; applied R1 to Section 2.1; applied I1 (prerequisites); confirmed Section 1 edit untouched | ✅ **PASSED** (Surgical insertion; 0 clobbered edits) |
+| **Revert Recommendation** | Reverted R1; verified R1 removed while I1 and Section 1 edit remained | ✅ **PASSED** (Clean removal) |
+| **Persistence Across Reloads** | Saved edit, queried `GET /api/lessons/{id}` after disk write; reloaded browser | ✅ **PASSED** (Matches disk state exactly) |
+| **Retry Failed Steps** | Called `/api/generate/retry/{id}` with `step="qc"`; verified QC re-evaluated active draft without erasing edits | ✅ **PASSED** (Successful re-evaluation) |
+| **Markdown Export** | Downloaded `/api/export/{id}`; verified header, finalized lesson, sources appendix, and both QC reports | ✅ **PASSED** (Complete single-file export) |
+| **TypeScript / Build** | Executed `npm run build` on Next.js 14 frontend | ✅ **PASSED** (Compiled cleanly with 0 type errors) |
 
 ---
 
-## ⚠️ Known Limitations & Future Work
+## ⚠️ Known Limitations & Future Enhancements
 
-- **Live search queries:** Google Custom Search API free tier is limited to 100 queries/day.
-- **Diff viewer:** The lesson editor currently provides side-by-side edit/preview modes. A future enhancement could add a visual Git-style diff when applying QC recommendations automatically.
-- **PDF Export:** Markdown and browser print are currently supported; native server-side PDF generation via WeasyPrint could be added with additional system dependencies.
-
+- **Live Google Search Quotas:** Google Custom Search API free tier provides 100 queries/day. If keys are missing or quotas are exhausted, the app falls back to curated Demo Mode.
+- **Diff Comparison View:** The current interface provides side-by-side edit/preview and surgical recommendation insertion. A visual split Git-diff modal could be added in the future.
+- **Direct PDF Export:** Users can currently print directly or save as PDF via the browser's print dialog (`Cmd+P`), styled with a dedicated `@media print` stylesheet. Native server-side PDF generation (e.g. WeasyPrint) could be added if system font libraries are installed.

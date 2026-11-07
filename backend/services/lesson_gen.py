@@ -380,12 +380,13 @@ For each action, say whether GET or POST is more appropriate and why:
 
 ## 8. References
 
-1. MDN Web Docs — HTTP Overview: https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview
-2. MDN Web Docs — HTTP Methods: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
-3. MDN Web Docs — HTTP Status Codes: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-4. RFC 9110 — HTTP Semantics (IETF): https://www.rfc-editor.org/rfc/rfc9110
-5. Traversy Media — HTTP Crash Course (YouTube): https://www.youtube.com/watch?v=iYM2zFP3Zn0
-6. Wikipedia — HTTP: https://en.wikipedia.org/wiki/HTTP
+1. HTTP: The Definitive Guide — David Gourley & Brian Totty (O'Reilly): https://www.oreilly.com/library/view/http-the-definitive/1565925092/
+2. MDN Web Docs — HTTP Overview: https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview
+3. MDN Web Docs — HTTP Methods: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+4. MDN Web Docs — HTTP Status Codes: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+5. RFC 9110 — HTTP Semantics (IETF): https://www.rfc-editor.org/rfc/rfc9110
+6. Traversy Media — HTTP Crash Course (YouTube): https://www.youtube.com/watch?v=iYM2zFP3Zn0
+7. Wikipedia — HTTP: https://en.wikipedia.org/wiki/HTTP
 """)
 
 _GIT_LESSON_CONTENT = textwrap.dedent("""\

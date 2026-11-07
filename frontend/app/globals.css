@@ -4,20 +4,53 @@
 
 /* Custom prose overrides for lesson content */
 .prose pre {
-  @apply text-sm;
+  @apply text-sm font-mono my-2;
 }
 
 .prose table {
-  @apply text-sm;
+  @apply text-sm my-3;
+}
+
+.prose th,
+.prose td {
+  @apply px-3 py-1.5 border border-gray-200 text-left;
+}
+
+.prose th {
+  @apply bg-gray-50 font-semibold text-gray-800;
+}
+
+.print-only {
+  display: none;
 }
 
 /* Print styles for export preview */
 @media print {
-  nav, button, .no-print {
+  header,
+  aside,
+  nav,
+  button,
+  .no-print {
     display: none !important;
   }
+
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  main {
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
   .prose {
-    max-width: 100%;
+    max-width: 100% !important;
   }
 }
-
