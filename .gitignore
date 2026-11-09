@@ -35,3 +35,6 @@ frontend/build/
 # OS
 .DS_Store
 *.pem
+
+# Saved lesson data (local only — not for git)
+backend/data/lessons/*.json

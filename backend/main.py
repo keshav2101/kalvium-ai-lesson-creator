@@ -25,9 +25,18 @@ app = FastAPI(
     description="AI-powered lesson creation with research, QC, and export.",
 )
 
+_CORS_ORIGINS_ENV = os.getenv("CORS_ORIGINS", "")
+_EXTRA_ORIGINS = [o.strip() for o in _CORS_ORIGINS_ENV.split(",") if o.strip()]
+_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    *_EXTRA_ORIGINS,
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=_ALLOWED_ORIGINS,
+    allow_origin_regex=r"https://.*\.vercel\.app",  # allow all Vercel preview deployments
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
